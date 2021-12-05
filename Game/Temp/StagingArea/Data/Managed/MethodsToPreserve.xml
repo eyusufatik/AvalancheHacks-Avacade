@@ -1,0 +1,15 @@
+<linker>
+	<assembly fullname="Assembly-CSharp" ignoreIfMissing="1">
+		<type fullname="MintViaChain">
+			<method name="CallContract"/>
+			<method name="CloseTab"/>
+		</type>
+		<type fullname="OpenLinks">
+			<method name="BuyToke"/>
+		</type>
+		<type fullname="RentPanel">
+			<method name="Close"/>
+			<method name="RentPlace"/>
+		</type>
+	</assembly>
+</linker>
