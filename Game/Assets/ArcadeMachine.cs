@@ -78,8 +78,7 @@ public class ArcadeMachine : MonoBehaviour
         {
 
             Debug.Log("This is " + gameObject.name);
-            Web3Mng.PlayGame(gameId);
-            // attention! this is a hack just for the hackathon. TODO: implent getting url from blockchain.
+            Web3Mng.PlayGame(slotId);
             openUrlLib.OpenWebsite(url);
 
         }

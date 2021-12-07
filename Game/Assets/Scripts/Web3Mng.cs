@@ -13,7 +13,7 @@ public class Web3Mng : MonoBehaviour
     // public Text ButtonText;
     // use WalletAddress function from web3.jslib
     [DllImport("__Internal")] private static extern string WalletAddress();
-    [DllImport("__Internal")] public static extern string MintGame(string tokenURI);
+    [DllImport("__Internal")] public static extern void MintGame(string tokenURI);
     [DllImport("__Internal")] public static extern void RentPlace(int placeId, int gameId);
     [DllImport("__Internal")] public static extern void BuyToken(int tokenAmount);
     [DllImport("__Internal")] public static extern void CheckTokenAmount();
@@ -29,10 +29,14 @@ public class Web3Mng : MonoBehaviour
         for(int i = 0; i < 6; i++){
             CheckPlace(i);
         }
-        for(int i = 0; i < 6; i++){
-            GetGameURI(i);
-        }
+        // for(int i = 0; i < 6; i++){
+        //     CheckURLS(i);
+        // }
 
+    }
+    private IEnumerator CheckURLS(int x){
+        yield return new WaitForSeconds(0.1f);
+        GetGameURI(x);
     }
     void Update(){
         // if(Input.GetKeyUp(KeyCode.A)){
@@ -102,6 +106,7 @@ public class Web3Mng : MonoBehaviour
         string url = datas[1];
         for(int i = 0; i < 6; i++){
             if(GameObject.Find("GameManager").GetComponent<SlotManager>().arcadeMachineSlots[i].gameId == gameId){
+                Debug.Log(url + " " + gameId);
                 GameObject.Find("GameManager").GetComponent<SlotManager>().arcadeMachineSlots[i].url = url;
             }
         }
@@ -112,10 +117,12 @@ public class Web3Mng : MonoBehaviour
         int placeId = int.Parse(datas[0]);
         bool isFull = bool.Parse(datas[1]);
         int gameId = int.Parse(datas[2]);
-
+        Debug.Log(placeId + " " + isFull + " " + gameId);
         if(isFull){
             GameObject.Find("GameManager").GetComponent<SlotManager>().arcadeMachineSlots[placeId].isEmpty = false;
             GameObject.Find("GameManager").GetComponent<SlotManager>().arcadeMachineSlots[placeId].gameId = gameId;
+            GameObject.Find("GameManager").GetComponent<SlotManager>().arcadeMachineSlots[placeId].UnHighlight();
+            GetGameURI(gameId);
         }
     }
 }

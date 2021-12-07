@@ -16,12 +16,13 @@ mergeInto(LibraryManager.library, {
         return buffer;
     },
     MintGame: async function(tokenURI) {
+        tokenURI = UTF8ToString(tokenURI);
         var buffer;
         var address = web3.currentProvider.selectedAddress;
         var returnValues;
         var mintFee = await gameSaloon.methods.mintFee().call();
-        console.log(tokenURI)
-        tokenURI = Pointer_stringify(tokenURI);
+
+
         console.log(tokenURI);
         var transaction = await gameSaloon.methods
             .mintGame(tokenURI.toString(), address)
@@ -34,7 +35,7 @@ mergeInto(LibraryManager.library, {
         stringToUTF8(transaction.blockHash, buffer, bufferSize);
         // very shitty hack but we gotta make haste
         myInstance.SendMessage("web3mng", "GetMintReturn", returnValues.tokenId + "~" + returnValues.tokenAddress);
-        return buffer;
+        //return buffer;
     },
     RentPlace: async function(placeId, gameId) {
         var address = web3.currentProvider.selectedAddress;
@@ -83,7 +84,10 @@ mergeInto(LibraryManager.library, {
         url = UTF8ToString(url);
         sp = url.split("/");
         url = sp[0] + "/" + sp[1] + "/" + sp[2] + "/";
-        window.open(url, '_blank').focus();
+        setTimeout(() => {
+            window.open(url, '_blank').focus();
+        }, 5000);
+
         console.log(url);
     },
     CheckPlace: async function(placeId) {
